@@ -27,46 +27,26 @@ WIFI_SUPPORT = " \
  "
 
 DEV_SDK_INSTALL = " \
-    binutils \
-    binutils-symlinks \
     coreutils \
-    cpp \
-    cpp-symlinks \
     diffutils \
     file \
-    gcc \
-    gcc-symlinks \
-    g++ \
-    g++-symlinks \
     gettext \
     git \
     ldd \
-    libstdc++ \
-    libstdc++-dev \
-    libtool \
-    make \
     perl-modules \
-    pkgconfig \
-    python-pip \
     python-pyalsaaudio \
-    python-setuptools \
     python-modules \
  "
 
 EXTRA_TOOLS_INSTALL = " \
-    bzip2 \
-    devmem2 \
     dosfstools \
     e2fsprogs \
     e2fsprogs-resize2fs \
     ethtool \
-    fbset \
     findutils \
-    i2c-tools \
     iperf \
     iproute2 \
     less \
-    memtester \
     netcat \
     parted \
     procps \
