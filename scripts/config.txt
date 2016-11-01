@@ -1,0 +1,7 @@
+dtparams=audio=on
+start_x=1
+gpu_mem=256
+video_camera=1
+
+dtoverlay=rpi-cirrus-wm5102
+dtoverlay=i2s-mmap
