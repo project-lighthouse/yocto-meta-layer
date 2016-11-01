@@ -1,0 +1,19 @@
+#! /bin/sh
+# /etc/init.d/lighthouse
+#
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    /bin/bash /mnt/boot/scripts/bootstrap.sh
+    ;;
+  stop)
+    echo "Stopping Lighthouse..."
+    ;;
+  *)
+    echo "Usage: /etc/init.d/lighthouse {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
