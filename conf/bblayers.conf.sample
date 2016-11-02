@@ -6,12 +6,12 @@ BBPATH = "${TOPDIR}"
 BBFILES ?= ""
 
 BBLAYERS ?= " \
-    ${HOME}/yocto/poky-krogoth/meta \
-    ${HOME}/yocto/poky-krogoth/meta-poky \
+    ${HOME}/yocto/poky/meta \
+    ${HOME}/yocto/poky/meta-poky \
     ${HOME}/yocto/meta-openembedded/meta-oe \
     ${HOME}/yocto/meta-openembedded/meta-multimedia \
     ${HOME}/yocto/meta-openembedded/meta-networking \
     ${HOME}/yocto/meta-openembedded/meta-python \
-    ${HOME}/yocto/meta-raspberrypi-krogoth \
-    ${HOME}/meta-lighthouse \
+    ${HOME}/yocto/meta-raspberrypi \
+    ${HOME}/yocto/yocto-meta-layer \
   "
