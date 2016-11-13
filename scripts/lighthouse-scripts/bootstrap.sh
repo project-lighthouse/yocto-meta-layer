@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPTS_FOLDER=${BASH_SOURCE%/*}
+WORKING_FOLDER=${BASH_SOURCE%/*}
 
 say() {
     echo $1
@@ -104,7 +104,8 @@ run_lighthouse() {
         say "Release the button."
         sleep 2
         /usr/bin/python ${SOURCE_LOCATION}/src/service_mode.py \
-            --config-path ${SCRIPTS_FOLDER}/boot.cfg \
+            --config-path ${WORKING_FOLDER}/boot.cfg \
+            --audio-setup-path ${WORKING_FOLDER}/setup_audio.sh \
             --gpio-pin ${BUTTON_GPIO_PIN} &
     else
         say "Now starting Lighthouse."
@@ -132,10 +133,10 @@ run_lighthouse() {
 }
 
 # Import environment values.
-. <(grep = ${SCRIPTS_FOLDER}/boot.cfg)
+. <(grep = ${WORKING_FOLDER}/boot.cfg)
 
 # Setup audio.
-. ${SCRIPTS_FOLDER}/setup_audio.sh
+. ${WORKING_FOLDER}/setup_audio.sh
 
 expand_rootfs
 checkout_source

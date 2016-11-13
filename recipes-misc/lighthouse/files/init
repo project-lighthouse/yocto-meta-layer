@@ -5,7 +5,7 @@
 # Carry out specific functions when asked to by the system
 case "$1" in
   start)
-    /bin/bash /mnt/boot/scripts/bootstrap.sh
+    /bin/bash /mnt/boot/lighthouse/bootstrap.sh
     ;;
   stop)
     echo "Stopping Lighthouse..."

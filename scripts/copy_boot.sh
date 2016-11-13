@@ -167,7 +167,7 @@ fi
 
 if [ -d ./lighthouse-scripts/ ]; then
 	echo "Writing lighthouse scripts to /media/card/scripts"
-	sudo cp -r ./lighthouse-scripts /media/card/scripts
+	sudo cp -r ./lighthouse-scripts /media/card/lighthouse
 fi
 
 echo "Unmounting ${DEV}"
