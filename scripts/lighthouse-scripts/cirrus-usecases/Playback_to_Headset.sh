@@ -2,6 +2,12 @@
 
 # $1 added to support 1st line argument. i.e. "./Playback_to_Headset.sh -q" will stop all the control information being displayed on screen
 
+if [ "x${2}" = "x" ]; then
+    VOLUME=32
+else
+    VOLUME=${2}
+fi
+
 #Playback from AP to Headset
 # Set path gain to -6dB for safety. ie max 0.5Vrms output level.
 amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1 Digital Volume' 116
@@ -13,9 +19,9 @@ amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1L Input 2' None
 amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1R Input 2' None
 # Setup HPOUT1 input path and volume
 amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1L Input 1' AIF1RX1
-amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1L Input 1 Volume' 32
+amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1L Input 1 Volume' ${VOLUME}
 amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1R Input 1' AIF1RX2
-amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1R Input 1 Volume' 32
+amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1R Input 1 Volume' ${VOLUME}
 # Unmute the HPOUT1 Outputs
 amixer $1 -Dhw:sndrpiwsp cset name='HPOUT1 Digital Switch' on
 

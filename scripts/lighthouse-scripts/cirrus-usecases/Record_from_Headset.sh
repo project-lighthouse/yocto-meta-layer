@@ -2,6 +2,12 @@
 
 # $1 added to support 1st line argument. i.e. "./Record_from_Headset.sh -q" will stop all the control information being displayed on screen
 
+if [ "x${2}" = "x" ]; then
+    VOLUME=32
+else
+    VOLUME=${2}
+fi
+
 # Record from Headset to AP
 # Set the Input PGA Volume +20dB
 amixer $1 -Dhw:sndrpiwsp cset name='IN1R Volume' 20
@@ -13,9 +19,9 @@ amixer $1 -Dhw:sndrpiwsp cset name='LHPF1 Mode' High-pass
 amixer $1 -Dhw:sndrpiwsp cset name='LHPF1 Coefficients' 240,3
 # Configure the Audio Interface and volume 0dB
 amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX1 Input 1' LHPF1
-amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX1 Input 1 Volume' 32
+amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX1 Input 1 Volume' ${VOLUME}
 amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX2 Input 1' LHPF1
-amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX2 Input 1 Volume' 32
+amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX2 Input 1 Volume' ${VOLUME}
 amixer $1 -Dhw:sndrpiwsp cset name='Headset Mic Switch' on
 # This is set up as a dual mono record.
 

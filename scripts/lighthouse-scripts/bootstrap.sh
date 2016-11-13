@@ -1,21 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-AUDIO_HINTS=true
-
-SOURCE_GIT_BRANCH=prototype
-SOURCE_LOCATION=/home/root/source
+SCRIPTS_FOLDER=${BASH_SOURCE%/*}
 
 say() {
     echo $1
 
     if [ "$AUDIO_HINTS" = true ] ; then
-        espeak -s 150 "$1"
+        espeak -s 150 "$1" --stdout | aplay -D "$SPEAKER"
     fi
-}
-
-prepare_audio() {
-    /mnt/boot/scripts/cirrus-usecases/Record_from_DMIC.sh -q
-    /mnt/boot/scripts/cirrus-usecases/Playback_to_Speakers.sh -q
 }
 
 expand_rootfs() {
@@ -23,7 +15,8 @@ expand_rootfs() {
     RESIZE_FS_MARKER=/mnt/boot/.resize-fs-needed
     DEVICE=/dev/mmcblk0
 
-    # First let's check how much unallocated space we have, round float numbers to a closest integer to use it later.
+    # First let's check how much unallocated space we have, round float numbers
+    # to a closest integer to use it later.
     FREE_MB=$(parted ${DEVICE} unit MB print free |\
               grep 'Free Space' |\
               tail -n1 |\
@@ -34,18 +27,21 @@ expand_rootfs() {
     # Get number of the root partition.
     ROOT_PART_NUM=$(parted ${DEVICE} -ms unit s p | tail -n 1 | cut -f 1 -d:)
 
-    # If we have more than 100MB of unused space let's expand root partition to use this space.
+    # If we have more than 100MB of unused space let's expand root partition to
+    # use this space.
     if test "$FREE_MB" -gt 100
     then
         say "Please, wait until root partition is expanded."
 
-        # Find out start offset of the root partition, to preserve it exactly the same.
+        # Find out start offset of the root partition, to preserve it exactly
+        # the same.
         ROOT_START_SECTOR=$(parted ${DEVICE} -ms unit s p |\
                             grep "^${ROOT_PART_NUM}" |\
                             cut -f 2 -d: |\
                             grep -o -E ${NUMBER_PATTERN})
 
-        # Return value will be an error for fdisk as it fails to reload the partition table because the root fs is mounted.
+        # Return value will be an error for fdisk as it fails to reload the
+        # partition table because the root fs is mounted.
         printf "p\nd\n2\nn\np\n2\n$ROOT_START_SECTOR\n\np\nw\n" | fdisk -uc /dev/mmcblk0
 
         # Leave a marker to know that we need to call resize2fs afterwards.
@@ -90,11 +86,58 @@ checkout_source() {
     fi
 }
 
-run_lighthouse() {
-    say "Lighthouse is ready!"
+check_source() {
+    if [ ! -f ${SOURCE_LOCATION}/src/main.py ];
+    then
+        say "Lighthouse source code not found."
+        exit 1
+    fi
 }
 
-prepare_audio
+run_lighthouse() {
+    gpio -g mode ${BUTTON_GPIO_PIN} up
+
+    SERVICE_MODE=$(gpio -g read ${BUTTON_GPIO_PIN})
+
+    # Run service mode script if user wants it. 0 means YES.
+    if [ "$SERVICE_MODE" = 0 ] ; then
+        say "Release the button."
+        sleep 2
+        /usr/bin/python ${SOURCE_LOCATION}/src/service_mode.py \
+            --config-path ${SCRIPTS_FOLDER}/boot.cfg \
+            --gpio-pin ${BUTTON_GPIO_PIN} &
+    else
+        say "Now starting Lighthouse."
+
+        # Create the data/log directory if it does not exist
+        # And run a web server there for monitoring
+        mkdir -p ${DATA_LOCATION}
+        (cd ${DATA_LOCATION}; python -m SimpleHTTPServer 80 &)
+
+        # Run lighthouse and restart it any time it crashes
+        while [ 1 ]; do
+            /usr/bin/python ${SOURCE_LOCATION}/src/main.py \
+                --verbose \
+                --db-path ${DATA_LOCATION}/Data \
+                --log-path ${DATA_LOCATION}/Log \
+                --gpio-pin ${BUTTON_GPIO_PIN} \
+                --audio-in-device ${MICROPHONE} \
+                --audio-out-device ${SPEAKER} \
+                --video-width ${VIDEO_WIDTH} \
+                --video-height ${VIDEO_HEIGHT}
+            sleep 1
+            say "Lighthouse exited. Restarting."
+        done &
+    fi
+}
+
+# Import environment values.
+. <(grep = ${SCRIPTS_FOLDER}/boot.cfg)
+
+# Setup audio.
+. ${SCRIPTS_FOLDER}/setup_audio.sh
+
 expand_rootfs
 checkout_source
+check_source
 run_lighthouse

@@ -2,6 +2,12 @@
 
 # Record from onboard stereo DMICs to AP
 
+if [ "x${2}" = "x" ]; then
+    VOLUME=32
+else
+    VOLUME=${2}
+fi
+
 # Set the digital input gain to -6dB
 amixer $1 -Dhw:sndrpiwsp cset name='IN2L Digital Volume' 116
 amixer $1 -Dhw:sndrpiwsp cset name='IN2R Digital Volume' 116
@@ -14,9 +20,9 @@ amixer $1 -Dhw:sndrpiwsp cset name='LHPF1 Coefficients' 240,3
 amixer $1 -Dhw:sndrpiwsp cset name='LHPF2 Coefficients' 240,3
 # Configure the Audio Interface and volume 0dB
 amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX1 Input 1' LHPF1
-amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX1 Input 1 Volume' 32
+amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX1 Input 1 Volume' ${VOLUME}
 amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX2 Input 1' LHPF2
-amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX2 Input 1 Volume' 32
+amixer $1 -Dhw:sndrpiwsp cset name='AIF1TX2 Input 1 Volume' ${VOLUME}
 amixer $1 -Dhw:sndrpiwsp cset name='DMIC Switch' on
 
 
