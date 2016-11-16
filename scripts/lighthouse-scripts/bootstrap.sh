@@ -76,7 +76,7 @@ checkout_source() {
 
     say "Please, wait until source code is downloaded."
 
-    git clone -b ${SOURCE_GIT_BRANCH} ${SOURCE_GIT_LINK} ${SOURCE_LOCATION}
+    git clone --depth ${SOURCE_GIT_HISTORY_DEPTH} -b ${SOURCE_GIT_BRANCH} ${SOURCE_GIT_LINK} ${SOURCE_LOCATION}
 
     if [ "$?" = "0" ]; then
         say "Source code has been successfully downloaded."

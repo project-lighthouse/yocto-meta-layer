@@ -16,6 +16,7 @@ CORE_OS = " \
 
 WIFI_SUPPORT = " \
     crda \
+    dhcpcd \
     iw \
     linux-firmware-brcm43430 \
     linux-firmware-ralink \

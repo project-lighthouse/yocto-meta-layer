@@ -1,5 +1,8 @@
 # Lighthouse Yocto meta layer
 
+Meta-Rpi commit: 22efa0d33b67dd2469acec7f1db280367171b1a8
+Cirrus Audio Card driver: http://www.horus.com/~hias/cirrus-driver.html
+
 Usage:
 
 1. Setup your build host - the machine where you're going to build Yocto image. To do this follow [this guide](http://www.yoctoproject.org/docs/2.2/mega-manual/mega-manual.html) or use ready-to-go Ubuntu [Docker image](https://hub.docker.com/r/azasypkin/lighthouse/);
@@ -17,4 +20,4 @@ Usage:
     4. Open `rpi-build/conf/bblayers.conf` and make sure paths to the repositories are correct. Adjust if needed.
 6. Once everything is ready, run `$ bitbake console-image`. It can take few hours for the first time, will be much faster after that.
 7. Once you're done, go to the `yocto-meta-layer/scripts` folder;
-8. `$ ./prepare-image.sh image-v0.0.6.img`.
+8. `$ ./prepare-image.sh image-v0.0.7.img`.
