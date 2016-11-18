@@ -125,7 +125,8 @@ run_lighthouse() {
                 --audio-in-device ${MICROPHONE} \
                 --audio-out-device ${SPEAKER} \
                 --video-width ${VIDEO_WIDTH} \
-                --video-height ${VIDEO_HEIGHT}
+                --video-height ${VIDEO_HEIGHT} \
+                --motion-background-removal-strategy ${ACQUISITION_STRATEGY}
             sleep 1
             say "Lighthouse exited. Restarting."
         done &
