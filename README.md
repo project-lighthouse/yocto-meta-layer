@@ -1,6 +1,6 @@
 # Lighthouse Yocto meta layer
 
-Meta-Rpi commit: 22efa0d33b67dd2469acec7f1db280367171b1a8
+Meta-Rpi commit: b10b0f1bf64ad7e8b1ab00e0a67f0c6e77ef0a97
 Cirrus Audio Card driver: http://www.horus.com/~hias/cirrus-driver.html
 
 Usage:
