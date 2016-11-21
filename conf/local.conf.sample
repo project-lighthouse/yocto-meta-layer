@@ -1,10 +1,8 @@
 # Local configuration for Lighthouse images
-# Yocto Project 2.1 Poky distribution [krogoth] branch
+# Yocto Project 2.2 Poky distribution [morty] branch
 # This is a sysvinit system
 
 LICENSE_FLAGS_WHITELIST = "commercial"
-
-BBMASK = "${HOME}/yocto/meta-raspberrypi/recipes-kernel/linux-firmware"
 
 DISTRO_FEATURES = "ext2 opengl usbhost ${DISTRO_FEATURES_LIBC}"
 

@@ -12,7 +12,7 @@ CORE_OS = " \
     openssh openssh-keygen openssh-sftp-server \
     term-prompt \
     tzdata \
- "
+"
 
 WIFI_SUPPORT = " \
     crda \
@@ -25,7 +25,7 @@ WIFI_SUPPORT = " \
     linux-firmware-rtl8192su \
     wireless-tools \
     wpa-supplicant \
- "
+"
 
 DEV_SDK_INSTALL = " \
     coreutils \
@@ -37,7 +37,7 @@ DEV_SDK_INSTALL = " \
     perl-modules \
     python-pyalsaaudio \
     python-modules \
- "
+"
 
 EXTRA_TOOLS_INSTALL = " \
     dosfstools \
@@ -58,7 +58,7 @@ EXTRA_TOOLS_INSTALL = " \
     util-linux \
     wget \
     zip \
- "
+"
 
 RPI_STUFF = " \
     bcm2835-tests \
@@ -66,14 +66,14 @@ RPI_STUFF = " \
     rpi-gpio \
     userland \
     wiringpi \
- "
+"
 
 ALSA += " \
     alsa-dev \
     alsa-lib \
     alsa-utils \
     alsa-utils-scripts \
- "
+"
 
 LIGHTHOUSE = " \
    espeak \
@@ -83,7 +83,7 @@ LIGHTHOUSE = " \
    lighthouse \
    samba \
    avahi-daemon \
- "
+"
 
 IMAGE_INSTALL += " \
     ${CORE_OS} \
@@ -93,7 +93,7 @@ IMAGE_INSTALL += " \
     ${WIFI_SUPPORT} \
     ${ALSA} \
     ${LIGHTHOUSE} \
- "
+"
 
 set_local_timezone() {
     ln -sf /usr/share/zoneinfo/EST5EDT ${IMAGE_ROOTFS}/etc/localtime
@@ -106,7 +106,7 @@ disable_bootlogd() {
 ROOTFS_POSTPROCESS_COMMAND += " \
     set_local_timezone ; \
     disable_bootlogd ; \
- "
+"
 
 export IMAGE_BASENAME = "console-image"
 
