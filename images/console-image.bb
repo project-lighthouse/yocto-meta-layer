@@ -37,6 +37,8 @@ DEV_SDK_INSTALL = " \
     perl-modules \
     python-pyalsaaudio \
     python-modules \
+    python3-modules \
+    python3-pydoc \
 "
 
 EXTRA_TOOLS_INSTALL = " \
